@@ -10,10 +10,17 @@
     "functions/*",
     "computes/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "cz": "git-cz"
+  },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
     }
   },
   "dependencies": {},
