@@ -1,7 +1,6 @@
 {
   "name": "shun-discord-bot",
   "description": "雑多Botです。変な機能ばかり実装しています。",
-  "version": "0.1.0",
   "license": "MIT",
   "private": true,
   "engines": {
