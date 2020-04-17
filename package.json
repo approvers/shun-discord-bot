@@ -9,5 +9,7 @@
   },
   "scripts": {},
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
 }
