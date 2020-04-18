@@ -9,7 +9,11 @@
     "clean": "rimraf dist",
     "watch": "tsc --watch"
   },
+  "dependencies": {
+    "puppeteer": "^3.0.0"
+  },
   "devDependencies": {
+    "@types/puppeteer": "^2.0.1",
     "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   }
