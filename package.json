@@ -13,6 +13,8 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore '**/*{ts,js}'",
     "lint:fix": "yarn lint --fix",
+    "test": "yarn workspaces run test",
+    "test:ci": "yarn workspaces run test:ci",
     "cz": "git-cz"
   },
   "husky": {
