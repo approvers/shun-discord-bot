@@ -1,7 +1,6 @@
 # SHUN discord bot
 
-[![Actions Status][Actions Icon]][Actions Href]
-[![Coverage Status][Coveralls Icon]][Coveralls Href]
+[![Actions Status][Actions Icon]][Actions Href] [![Coverage Status][Coveralls Icon]][Coveralls Href]
 
 > 雑多Botです。変な機能ばかり実装しています。
 
