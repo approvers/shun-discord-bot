@@ -1,0 +1,50 @@
+grass:
+  _root: |
+    ```asciidoc
+    = Description =
+      草/くさ/kusaに対して反応してGitHubの芝(草)を表示します。
+    = Usage =
+      !grass [subcommands] ...
+    = Subcommands =
+      help::               ヘルプを表示します。
+      setup [user name]::  草Botのセットアップを行います。
+      enable::             草Botを有効にします。
+      disable::            草Botを無効にします。
+      image [on/off]::     画像表示を有効/無効にします。
+      dark [on/off]::      ダークテーマを有効/無効にします。
+    ```
+  setup: |
+    ```asciidoc
+    = Description =
+      草Botのセットアップを行います。
+    = Usage =
+      !grass setup [user name]
+    ```
+  enable: |
+    ```asciidoc
+    = Description =
+      草Botを有効にします。先にセットアップをしないと使えません。
+    = Usage =
+      !grass enable
+    ```
+  disable: |
+    ```asciidoc
+    = Description =
+      草Botを無効にします。先にセットアップをしないと使えません。
+    = Usage =
+      !grass disable
+    ```
+  image: |
+    ```asciidoc
+    = Description =
+      画像表示を有効/無効にします。
+    = Usage =
+      !grass image [on/off]
+    ```
+  dark: |
+    ```asciidoc
+    = Description =
+      ダークテーマを有効/無効にします。
+    = Usage =
+      !grass dark [on/off]
+    ```

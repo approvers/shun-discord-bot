@@ -12,11 +12,13 @@
   },
   "devDependencies": {
     "@google-cloud/firestore": "^3.7.4",
+    "@types/js-yaml": "^3.12.3",
     "@types/ws": "^7.2.4",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "js-yaml": "^3.13.1"
   }
 }
