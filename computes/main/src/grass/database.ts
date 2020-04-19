@@ -57,3 +57,15 @@ export async function getGrass(userId: string): Promise<GrassDoc | null> {
   const grass = ref.data()
   return isGrassDoc(grass) ? grass : null
 }
+
+export async function enableGrass(userId: string): Promise<void> {
+  const user = await getGrass(userId)
+  if (!user) throw new Error("user is not existing")
+  await grassCollection().doc(userId).update({ isEnable: true })
+}
+
+export async function disableGrass(userId: string): Promise<void> {
+  const user = await getGrass(userId)
+  if (!user) throw new Error("user is not existing")
+  await grassCollection().doc(userId).update({ isEnable: false })
+}
