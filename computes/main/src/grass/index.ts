@@ -30,6 +30,7 @@ const setup = async (
     await message.channel.send(usage.grass.setup)
     return
   }
+  await message.reply("セットアップを開始します。(これには時間がかかります。)")
   const grass = await database.fetchGrass(name, false)
   if (grass == null) {
     await message.reply("指定したユーザーは存在しません。")
@@ -50,30 +51,28 @@ const enable = async (
   commands: string[],
   message: Discord.Message,
 ): Promise<void> => {
-  const id = message.member?.id as string
-  const user = await database.getGrass(id)
-  if (!user) {
+  const id = message.author.id
+  try {
+    await database.updateConfig(id, { enable: true })
+    await message.reply("草Botを有効にしました。")
+  } catch {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
-    return
   }
-  await database.updateConfig(id, { enable: true })
-  await message.reply("草Botを有効にしました。")
 }
 
 const disable = async (
   commands: string[],
   message: Discord.Message,
 ): Promise<void> => {
-  const id = message.member?.id as string
-  const user = await database.getGrass(id)
-  if (!user) {
+  const id = message.author.id
+  try {
+    await database.updateConfig(id, { enable: false })
+    await message.reply("草Botを無効にしました。")
+  } catch {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
-    return
   }
-  await database.updateConfig(id, { enable: false })
-  await message.reply("草Botを無効にしました。")
 }
 
 const image = async (
@@ -81,27 +80,26 @@ const image = async (
   message: Discord.Message,
 ): Promise<void> => {
   const config = commands[2]
-  const id = message.member?.id as string
-  const user = await database.getGrass(id)
-  if (!user) {
+  const id = message.author.id
+  try {
+    switch (config) {
+      case "on":
+        await database.updateConfig(id, { display: true })
+        break
+      case "off":
+        await database.updateConfig(id, { display: false })
+        break
+      default:
+        await message.channel.send(usage.grass.image)
+        return
+    }
+    await message.reply(
+      `画像表示を${config === "on" ? "有効" : "無効"}にしました。`,
+    )
+  } catch {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
-    return
   }
-  switch (config) {
-    case "on":
-      await database.updateConfig(id, { display: true })
-      break
-    case "off":
-      await database.updateConfig(id, { display: false })
-      break
-    default:
-      await message.channel.send(usage.grass.image)
-      return
-  }
-  await message.reply(
-    `画像表示を${config === "on" ? "有効" : "無効"}にしました。`,
-  )
 }
 
 const dark = async (
