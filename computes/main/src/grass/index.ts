@@ -107,27 +107,26 @@ const dark = async (
   message: Discord.Message,
 ): Promise<void> => {
   const config = commands[2]
-  const id = message.member?.id as string
-  const user = await database.getGrass(id)
-  if (!user) {
+  const id = message.author.id
+  try {
+    switch (config) {
+      case "on":
+        await database.updateConfig(id, { dark: true })
+        break
+      case "off":
+        await database.updateConfig(id, { dark: false })
+        break
+      default:
+        await message.channel.send(usage.grass.image)
+        return
+    }
+    await message.reply(
+      `ダークモードを${config === "on" ? "有効" : "無効"}にしました。`,
+    )
+  } catch {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
-    return
   }
-  switch (config) {
-    case "on":
-      await database.updateConfig(id, { dark: true })
-      break
-    case "off":
-      await database.updateConfig(id, { dark: false })
-      break
-    default:
-      await message.channel.send(usage.grass.image)
-      return
-  }
-  await message.reply(
-    `ダークモードを${config === "on" ? "有効" : "無効"}にしました。`,
-  )
 }
 
 export const parseCommand = async (
