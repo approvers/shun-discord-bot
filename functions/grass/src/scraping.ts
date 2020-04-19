@@ -40,10 +40,10 @@ export async function getData(
     const grasses = [...document.getElementsByClassName("day")].map((grass) =>
       parseInt(grass.getAttribute("data-count") ?? "0"),
     )
+    if (!grasses.length) return null
     const today = grasses.slice(-1)[0]
     const week = grasses.slice(-7).reduce((prev, curr) => prev + curr)
     const year = grasses.reduce((prev, curr) => prev + curr)
-    if (today == null || week == null || year == null) return null
     return { today, week, year }
   })
 
