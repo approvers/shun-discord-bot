@@ -13,9 +13,7 @@ module.exports = async (req: Request, res: Response) => {
   const image = await storage.addImage(name, grass.image)
 
   return res.status(200).json({
-    today: grass.today,
-    week: grass.week,
-    year: grass.year,
+    ...grass,
     image,
   })
 }
