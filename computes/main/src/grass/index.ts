@@ -15,7 +15,9 @@ export const sayGrass = async (message: Discord.Message): Promise<void> => {
     .match(/.{1,2000}/g)
     ?.map((grassStr) => message.channel.send(grassStr))
   if (grassPromises) await Promise.all(grassPromises)
-  await message.channel.send(grass.image)
+  if (grass.display) {
+    await message.channel.send(grass.image)
+  }
 }
 
 const setup = async (
