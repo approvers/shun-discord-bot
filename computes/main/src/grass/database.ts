@@ -69,3 +69,15 @@ export async function disableGrass(userId: string): Promise<void> {
   if (!user) throw new Error("user is not existing")
   await grassCollection().doc(userId).update({ isEnable: false })
 }
+
+export async function enableDark(userId: string): Promise<void> {
+  const user = await getGrass(userId)
+  if (!user) throw new Error("user is not existing")
+  await grassCollection().doc(userId).update({ isDark: true })
+}
+
+export async function disableDark(userId: string): Promise<void> {
+  const user = await getGrass(userId)
+  if (!user) throw new Error("user is not existing")
+  await grassCollection().doc(userId).update({ isDark: false })
+}
