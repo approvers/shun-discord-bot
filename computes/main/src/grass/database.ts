@@ -7,20 +7,31 @@ interface Grass {
   year: number
   image: string
 }
-interface GrassDoc extends Grass {
-  name: string
-  isEnable: boolean
-  isDark: boolean
-}
 const isGrass = (item: any): item is Grass =>
   typeof item?.today === "number" &&
   typeof item?.week === "number" &&
   typeof item?.year === "number" &&
   typeof item?.image === "string"
+
+interface Config {
+  enable?: boolean
+  dark?: boolean
+  display?: boolean
+  target?: "today" | "week" | "year"
+}
+interface GrassDoc extends Grass, Config {
+  name: string
+  enable: boolean
+  dark: boolean
+  display: boolean
+  target: "today" | "week" | "year"
+}
 const isGrassDoc = (item: any): item is GrassDoc =>
   typeof item?.name === "string" &&
-  typeof item?.isEnable === "boolean" &&
-  typeof item?.isDark === "boolean" &&
+  typeof item?.enable === "boolean" &&
+  typeof item?.dark === "boolean" &&
+  typeof item?.display === "boolean" &&
+  ["today", "week", "year"].includes(item?.target) &&
   isGrass(item)
 
 const database = new Firestore()
@@ -46,9 +57,11 @@ export async function setGrass(userId: string, grass: GrassDoc): Promise<void> {
       week: grass.week,
       year: grass.year,
       image: grass.image,
+      enable: grass.enable,
+      dark: grass.dark,
+      display: grass.display,
+      target: grass.target,
       name: grass.name,
-      isEnable: grass.isEnable,
-      isDark: grass.isDark,
     } as GrassDoc)
 }
 
@@ -58,26 +71,11 @@ export async function getGrass(userId: string): Promise<GrassDoc | null> {
   return isGrassDoc(grass) ? grass : null
 }
 
-export async function enableGrass(userId: string): Promise<void> {
+export async function updateConfig(
+  userId: string,
+  config: Config,
+): Promise<void> {
   const user = await getGrass(userId)
-  if (!user) throw new Error("user is not existing")
-  await grassCollection().doc(userId).update({ isEnable: true })
-}
-
-export async function disableGrass(userId: string): Promise<void> {
-  const user = await getGrass(userId)
-  if (!user) throw new Error("user is not existing")
-  await grassCollection().doc(userId).update({ isEnable: false })
-}
-
-export async function enableDark(userId: string): Promise<void> {
-  const user = await getGrass(userId)
-  if (!user) throw new Error("user is not existing")
-  await grassCollection().doc(userId).update({ isDark: true })
-}
-
-export async function disableDark(userId: string): Promise<void> {
-  const user = await getGrass(userId)
-  if (!user) throw new Error("user is not existing")
-  await grassCollection().doc(userId).update({ isDark: false })
+  if (!user) throw new Error("user is not found")
+  await grassCollection().doc(userId).update(config)
 }
