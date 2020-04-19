@@ -11,6 +11,10 @@
     "test:ci": "jest && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
+    "@google-cloud/firestore": "^3.7.4",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
   }
 }
