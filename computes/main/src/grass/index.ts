@@ -138,19 +138,20 @@ export const parseCommand = async (
   switch (commands[1]) {
     case "setup":
       await setup(commands, message)
-      return
+      break
     case "enable":
       await enable(commands, message)
-      return
+      break
     case "disable":
       await disable(commands, message)
-      return
+      break
     case "image":
       await image(commands, message)
-      return
+      break
     case "dark":
       await dark(commands, message)
-      return
+      break
+    case "help":
     default:
       await message.channel.send(usage.grass._root)
       break
