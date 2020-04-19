@@ -6,12 +6,12 @@ grass:
     = Usage =
       !grass [subcommands] ...
     = Subcommands =
-      help::               ヘルプを表示します。
-      setup [user name]::  草Botのセットアップを行います。
-      enable::             草Botを有効にします。
-      disable::            草Botを無効にします。
-      image [on/off]::     画像表示を有効/無効にします。
-      dark [on/off]::      ダークテーマを有効/無効にします。
+      help              :: ヘルプを表示します。
+      setup [user name] :: 草Botのセットアップを行います。
+      enable            :: 草Botを有効にします。
+      disable           :: 草Botを無効にします。
+      image [on/off]    :: 画像表示を有効/無効にします。
+      dark [on/off]     :: ダークテーマを有効/無効にします。
     ```
   setup: |
     ```asciidoc
@@ -23,14 +23,14 @@ grass:
   enable: |
     ```asciidoc
     = Description =
-      草Botを有効にします。先にセットアップをしないと使えません。
+      草Botを有効にします。
     = Usage =
       !grass enable
     ```
   disable: |
     ```asciidoc
     = Description =
-      草Botを無効にします。先にセットアップをしないと使えません。
+      草Botを無効にします。
     = Usage =
       !grass disable
     ```
