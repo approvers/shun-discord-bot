@@ -26,7 +26,7 @@ const isGrassDoc = (item: any): item is GrassDoc =>
 const database = new Firestore()
 const grassCollection = () => database.collection("grass")
 
-export async function fetchGrass(
+export function fetchGrass(
   name: string,
   isDark: boolean,
 ): Promise<Grass | null> {
