@@ -11,6 +11,7 @@ interface Grass extends Document {
   disable: string
   image: string
   dark: string
+  target: string
 }
 
 interface Usage {
