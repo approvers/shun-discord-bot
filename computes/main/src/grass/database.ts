@@ -1,5 +1,7 @@
 import axios from "axios"
 import { Firestore } from "@google-cloud/firestore"
+import CollectionReference = FirebaseFirestore.CollectionReference
+import DocumentData = FirebaseFirestore.DocumentData
 
 interface Grass {
   today: number
@@ -35,7 +37,8 @@ const isGrassDoc = (item: any): item is GrassDoc =>
   isGrass(item)
 
 const database = new Firestore()
-const grassCollection = () => database.collection("grass")
+const grassCollection = (): CollectionReference<DocumentData> =>
+  database.collection("grass")
 
 export function fetchGrass(
   name: string,
