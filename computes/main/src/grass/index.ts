@@ -18,13 +18,43 @@ export const sayGrass = async (message: Discord.Message): Promise<void> => {
   await message.channel.send(grass.image)
 }
 
+const setup = async (
+  commands: string[],
+  message: Discord.Message,
+): Promise<void> => {
+  const name = commands[2]
+  const id = message.member?.id as string
+  if (name === undefined) {
+    await message.channel.send(usage.grass.setup)
+    return
+  }
+  const grass = await database.fetchGrass(name, false)
+  if (grass == null) {
+    await message.reply("指定したユーザーは存在しません。")
+    return
+  }
+  await database.setGrass(id, {
+    ...grass,
+    name,
+    enable: true,
+    display: true,
+    dark: true,
+    target: "year",
+  })
+  await message.reply("セットアップが完了しました。")
+}
+
 export const parseCommand = async (
   commands: string[],
   message: Discord.Message,
 ): Promise<void> => {
   if (commands[0] !== "!grass") return
-  if (commands[1] === undefined) {
-    await message.channel.send(usage.grass._root)
-    return
+  switch (commands[1]) {
+    case "setup":
+      await setup(commands, message)
+      return
+    default:
+      await message.channel.send(usage.grass._root)
+      break
   }
 }
