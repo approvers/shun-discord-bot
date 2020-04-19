@@ -6,12 +6,13 @@ grass:
     = Usage =
       !grass [subcommands] ...
     = Subcommands =
-      help              :: ヘルプを表示します。
-      setup [user name] :: 草Botのセットアップを行います。
-      enable            :: 草Botを有効にします。
-      disable           :: 草Botを無効にします。
-      image [on/off]    :: 画像表示を有効/無効にします。
-      dark [on/off]     :: ダークテーマを有効/無効にします。
+      help                     :: ヘルプを表示します。
+      setup [user name]        :: 草Botのセットアップを行います。
+      enable                   :: 草Botを有効にします。
+      disable                  :: 草Botを無効にします。
+      image [on/off]           :: 画像表示を有効/無効にします。
+      dark [on/off]            :: ダークテーマを有効/無効にします。
+      target [today/week/year] :: 表示する草の期間を設定します。
     ```
   setup: |
     ```asciidoc
@@ -47,4 +48,11 @@ grass:
       ダークテーマを有効/無効にします。
     = Usage =
       !grass dark [on/off]
+    ```
+  target: |
+    ```asciidoc
+    = Description =
+      表示する草の期間を設定します。
+    = Usage =
+      !grass target [today/week/year]
     ```
