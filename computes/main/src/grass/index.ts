@@ -44,6 +44,36 @@ const setup = async (
   await message.reply("セットアップが完了しました。")
 }
 
+const enable = async (
+  commands: string[],
+  message: Discord.Message,
+): Promise<void> => {
+  const id = message.member?.id as string
+  const user = await database.getGrass(id)
+  if (!user) {
+    await message.reply("セットアップが行われていません。")
+    await message.channel.send(usage.grass.setup)
+    return
+  }
+  await database.updateConfig(id, { enable: true })
+  await message.reply("草Botを有効にしました。")
+}
+
+const disable = async (
+  commands: string[],
+  message: Discord.Message,
+): Promise<void> => {
+  const id = message.member?.id as string
+  const user = await database.getGrass(id)
+  if (!user) {
+    await message.reply("セットアップが行われていません。")
+    await message.channel.send(usage.grass.setup)
+    return
+  }
+  await database.updateConfig(id, { enable: false })
+  await message.reply("草Botを無効にしました。")
+}
+
 export const parseCommand = async (
   commands: string[],
   message: Discord.Message,
@@ -52,6 +82,12 @@ export const parseCommand = async (
   switch (commands[1]) {
     case "setup":
       await setup(commands, message)
+      return
+    case "enable":
+      await enable(commands, message)
+      return
+    case "disable":
+      await disable(commands, message)
       return
     default:
       await message.channel.send(usage.grass._root)
