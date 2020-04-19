@@ -74,6 +74,34 @@ const disable = async (
   await message.reply("草Botを無効にしました。")
 }
 
+const image = async (
+  commands: string[],
+  message: Discord.Message,
+): Promise<void> => {
+  const config = commands[2]
+  const id = message.member?.id as string
+  const user = await database.getGrass(id)
+  if (!user) {
+    await message.reply("セットアップが行われていません。")
+    await message.channel.send(usage.grass.setup)
+    return
+  }
+  switch (config) {
+    case "on":
+      await database.updateConfig(id, { display: true })
+      break
+    case "off":
+      await database.updateConfig(id, { display: false })
+      break
+    default:
+      await message.channel.send(usage.grass.image)
+      return
+  }
+  await message.reply(
+    `画像表示を${config === "on" ? "有効" : "無効"}にしました。`,
+  )
+}
+
 export const parseCommand = async (
   commands: string[],
   message: Discord.Message,
@@ -88,6 +116,9 @@ export const parseCommand = async (
       return
     case "disable":
       await disable(commands, message)
+      return
+    case "image":
+      await image(commands, message)
       return
     default:
       await message.channel.send(usage.grass._root)
