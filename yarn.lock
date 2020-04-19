@@ -160,6 +160,20 @@
   dependencies:
     find-up "^4.0.0"
 
+"@discordjs/collection@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.1.5.tgz#1781c620b4c88d619bd0373a1548e5a6025e3d3a"
+  integrity sha512-CU1q0UXQUpFNzNB7gufgoisDHP7n+T3tkqTsp3MNUkVJ5+hS3BCvME8uCXAUFlz+6T2FbTCu75A+yQ7HMKqRKw==
+
+"@discordjs/form-data@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@discordjs/form-data/-/form-data-3.0.1.tgz#5c9e6be992e2e57d0dfa0e39979a850225fb4697"
+  integrity sha512-ZfFsbgEXW71Rw/6EtBdrP5VxBJy4dthyC0tpQKGKmYFImlmmrykO14Za+BiIVduwjte0jXEBlhSKf0MWbFp9Eg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
+
 "@google-cloud/common@^2.1.1":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@google-cloud/common/-/common-2.4.0.tgz#2783b7de8435024a31453510f2dab5a6a91a4c82"
@@ -441,6 +455,13 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/ws@^7.2.4":
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.2.4.tgz#b3859f7b9c243b220efac9716ec42c716a72969d"
+  integrity sha512-9S6Ask71vujkVyeEXKxjBSUV8ZUB0mjL5la4IncBoheu04bDaYyUKErh1BQcY9+WzOUOiKqz/OnpJHYckbMfNg==
+  dependencies:
+    "@types/node" "*"
+
 "@typescript-eslint/eslint-plugin@^2.28.0":
   version "2.28.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.28.0.tgz#4431bc6d3af41903e5255770703d4e55a0ccbdec"
@@ -667,6 +688,11 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+
+asynckit@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
+  integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
 atob@^2.1.2:
   version "2.1.2"
@@ -976,6 +1002,13 @@ color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+
+combined-stream@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
+  integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
+  dependencies:
+    delayed-stream "~1.0.0"
 
 commander@^4.0.1:
   version "4.1.1"
@@ -1338,6 +1371,11 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
+delayed-stream@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
+  integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
+
 depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
@@ -1357,6 +1395,20 @@ detect-indent@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-6.0.0.tgz#0abd0f549f69fc6659a254fe96786186b6f528fd"
   integrity sha512-oSyFlqaTHCItVRGK5RmrmjB+CmaMOW7IaNA/kdxqhoa6d17j/5ce9O9eWXmV/KEdRwqpQA+Vqe8a8Bsybu4YnA==
+
+discord.js@^12.2.0:
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/discord.js/-/discord.js-12.2.0.tgz#31018732e42a495c92655055192221eab2ad11a9"
+  integrity sha512-Ueb/0SOsxXyqwvwFYFe0msMrGqH1OMqpp2Dpbplnlr4MzcRrFWwsBM9gKNZXPVBHWUKiQkwU8AihXBXIvTTSvg==
+  dependencies:
+    "@discordjs/collection" "^0.1.5"
+    "@discordjs/form-data" "^3.0.1"
+    abort-controller "^3.0.0"
+    node-fetch "^2.6.0"
+    prism-media "^1.2.0"
+    setimmediate "^1.0.5"
+    tweetnacl "^1.0.3"
+    ws "^7.2.1"
 
 doctrine@^3.0.0:
   version "3.0.0"
@@ -3107,7 +3159,7 @@ mime-db@1.43.0, "mime-db@>= 1.43.0 < 2":
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.43.0.tgz#0a12e0502650e473d735535050e7c8f4eb4fae58"
   integrity sha512-+5dsGEEovYbT8UY9yD7eE4XTc4UwJ1jBYlgaQQF38ENsKR3wj/8q8RFZrF9WIZpB2V1ArTVFUva8sAul1NzRzQ==
 
-mime-types@^2.0.8, mime-types@^2.1.25, mime-types@~2.1.24:
+mime-types@^2.0.8, mime-types@^2.1.12, mime-types@^2.1.25, mime-types@~2.1.24:
   version "2.1.26"
   resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.26.tgz#9c921fc09b7e149a65dfdc0da4d20997200b0a06"
   integrity sha512-01paPWYgLrkqAyrlDorC1uDwl2p3qZT7yl806vW7DvDoxwXi46jsjFbg+WdwotBIk6/MbEhO/dh5aZ5sNj/dWQ==
@@ -3560,6 +3612,11 @@ prettier@^2.0.4:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
   integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
 
+prism-media@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-1.2.1.tgz#168f323712bcaacb1d70ae613bf9d9dc44cf43d4"
+  integrity sha512-R3EbKwJiYlTvGwcG1DpUt+06DsxOGS5W4AMEHT7oVOjG93MjpdhGX1whHyjnqknylLMupKAsKMEXcTNRbPe6Vw==
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -3966,6 +4023,11 @@ set-value@^2.0.0, set-value@^2.0.1:
     is-extendable "^0.1.1"
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
+
+setimmediate@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
+  integrity sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU=
 
 setprototypeof@1.1.1:
   version "1.1.1"
@@ -4464,6 +4526,11 @@ tsutils@^3.17.1:
   dependencies:
     tslib "^1.8.1"
 
+tweetnacl@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
+  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
+
 type-check@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.3.2.tgz#5884cab512cf1d355e3fb784f30804b2b520db72"
@@ -4689,6 +4756,11 @@ ws@^6.1.0:
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
   dependencies:
     async-limiter "~1.0.0"
+
+ws@^7.2.1:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
+  integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
