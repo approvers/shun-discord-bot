@@ -129,6 +129,34 @@ const dark = async (
   }
 }
 
+const target = async (
+  commands: string[],
+  message: Discord.Message,
+): Promise<void> => {
+  const config = commands[2]
+  const id = message.author.id
+  try {
+    switch (config) {
+      case "today":
+        await database.updateConfig(id, { target: "today" })
+        break
+      case "week":
+        await database.updateConfig(id, { target: "week" })
+        break
+      case "year":
+        await database.updateConfig(id, { target: "year" })
+        break
+      default:
+        await message.channel.send(usage.grass.target)
+        return
+    }
+    await message.reply(`期間を${config}に設定しました。`)
+  } catch {
+    await message.reply("セットアップが行われていません。")
+    await message.channel.send(usage.grass.setup)
+  }
+}
+
 export const parseCommand = async (
   commands: string[],
   message: Discord.Message,
@@ -149,6 +177,9 @@ export const parseCommand = async (
       break
     case "dark":
       await dark(commands, message)
+      break
+    case "target":
+      await target(commands, message)
       break
     case "help":
     default:
