@@ -1,33 +1,43 @@
 import * as database from "./database"
-import { Message } from "discord.js"
 import usage from "../usage"
+import Message from "../message"
+import Command from "../command"
 
-export const sayGrass = async (message: Message): Promise<void> => {
+Message.add(async (message) => {
   if (message.author.bot) return
-  if (!message.member?.id) return
-  if (Math.ceil(Math.random() * 100) % 5) return
+  const id = message.author.id
+  // if (Math.ceil(Math.random() * 100) % 5) return
   if (!message.content.match(/(草|くさ|kusa)/iu)) return
-  const grass = await database.getGrass(message.member.id)
+  const grass = await database.getGrass(id)
   if (!grass?.enable) return
   const count = grass[grass.target]
-  const grassPromises = "w"
+  const sendPromise = "w"
     .repeat(count)
     .match(/.{1,2000}/g)
     ?.map((grassStr) => message.channel.send(grassStr))
-  if (grassPromises) await Promise.all(grassPromises)
-  if (grass.display) {
-    await message.channel.send(grass.image)
-  }
-}
+  if (sendPromise) await Promise.all(sendPromise)
+  if (grass.display) await message.channel.send(grass.image)
+})
 
-const setup = async (commands: string[], message: Message): Promise<void> => {
-  const name = commands[2]
-  const id = message.member?.id as string
-  if (name === undefined) {
+const mainCommand = "!grass"
+
+Command.add(async (args, message) => {
+  const [main, sub] = args
+  if (main !== mainCommand) return
+  if (sub !== "help") return
+  await message.channel.send(usage.grass._root)
+})
+
+Command.add(async (args, message) => {
+  const [main, sub, name] = args
+  const id = message.author.id
+  if (main !== mainCommand && sub !== "setup") return
+  if (sub !== "setup") return
+  if (name == null) {
     await message.channel.send(usage.grass.setup)
     return
   }
-  await message.reply("セットアップを開始します。(これには時間がかかります。)")
+  await message.reply("セットアップを開始します(これには時間がかかります)。")
   const grass = await database.fetchGrass(name, false)
   if (grass == null) {
     await message.reply("指定したユーザーは存在しません。")
@@ -42,9 +52,13 @@ const setup = async (commands: string[], message: Message): Promise<void> => {
     target: "year",
   })
   await message.reply("セットアップが完了しました。")
-}
+})
 
-const enable = async (commands: string[], message: Message): Promise<void> => {
+Command.add(async (args, message) => {
+  const [main, sub] = args
+  if (main !== mainCommand || sub !== "enable") {
+    return
+  }
   const id = message.author.id
   try {
     await database.updateConfig(id, { enable: true })
@@ -53,9 +67,11 @@ const enable = async (commands: string[], message: Message): Promise<void> => {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
   }
-}
+})
 
-const disable = async (commands: string[], message: Message): Promise<void> => {
+Command.add(async (args, message) => {
+  const [main, sub] = args
+  if (main !== mainCommand || sub !== "disable") return
   const id = message.author.id
   try {
     await database.updateConfig(id, { enable: false })
@@ -64,10 +80,11 @@ const disable = async (commands: string[], message: Message): Promise<void> => {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
   }
-}
+})
 
-const image = async (commands: string[], message: Message): Promise<void> => {
-  const config = commands[2]
+Command.add(async (args, message) => {
+  const [main, sub, config] = args
+  if (main !== mainCommand || sub !== "image") return
   const id = message.author.id
   try {
     switch (config) {
@@ -88,10 +105,11 @@ const image = async (commands: string[], message: Message): Promise<void> => {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
   }
-}
+})
 
-const dark = async (commands: string[], message: Message): Promise<void> => {
-  const config = commands[2]
+Command.add(async (args, message) => {
+  const [main, sub, config] = args
+  if (main !== mainCommand || sub !== "dark") return
   const id = message.author.id
   try {
     switch (config) {
@@ -112,10 +130,11 @@ const dark = async (commands: string[], message: Message): Promise<void> => {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
   }
-}
+})
 
-const target = async (commands: string[], message: Message): Promise<void> => {
-  const config = commands[2]
+Command.add(async (args, message) => {
+  const [main, sub, config] = args
+  if (main !== mainCommand || sub !== "target") return
   const id = message.author.id
   try {
     switch (config) {
@@ -137,35 +156,4 @@ const target = async (commands: string[], message: Message): Promise<void> => {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
   }
-}
-
-export const parseCommand = async (
-  commands: string[],
-  message: Message,
-): Promise<void> => {
-  if (commands[0] !== "!grass") return
-  switch (commands[1]) {
-    case "setup":
-      await setup(commands, message)
-      break
-    case "enable":
-      await enable(commands, message)
-      break
-    case "disable":
-      await disable(commands, message)
-      break
-    case "image":
-      await image(commands, message)
-      break
-    case "dark":
-      await dark(commands, message)
-      break
-    case "target":
-      await target(commands, message)
-      break
-    case "help":
-    default:
-      await message.channel.send(usage.grass._root)
-      break
-  }
-}
+})

@@ -1,5 +1,7 @@
-import * as grass from "./grass"
 import * as Discord from "discord.js"
+import Message from "./message"
+import Command from "./command"
+require("./grass")
 
 const client = new Discord.Client()
 const token = process.env.DISCORD_TOKEN
@@ -10,8 +12,6 @@ client.login(token).catch(console.error)
 client.on("ready", () => console.log("Ready..."))
 
 client.on("message", async (message) => {
-  if (message.author.bot) return
-  await grass.sayGrass(message)
-  const commands = message.content.trim().replace(/\s+/g, " ").split(" ")
-  await grass.parseCommand(commands, message)
+  await Message.run(message)
+  await Command.run(message)
 })
