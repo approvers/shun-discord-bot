@@ -2,20 +2,20 @@ import { safeLoad } from "js-yaml"
 import { readFileSync } from "fs"
 
 interface Document {
-  _root: string
+  readonly _root: string
 }
 
 interface Grass extends Document {
-  setup: string
-  enable: string
-  disable: string
-  image: string
-  dark: string
-  target: string
+  readonly setup: string
+  readonly enable: string
+  readonly disable: string
+  readonly image: string
+  readonly dark: string
+  readonly target: string
 }
 
 interface Usage {
-  grass: Grass
+  readonly grass: Grass
 }
 
 export default safeLoad(readFileSync("usage.yml", "utf-8")) as Usage
