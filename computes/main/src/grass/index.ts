@@ -1,3 +1,4 @@
+import cron from "node-cron"
 import * as database from "./database"
 import usage from "../usage"
 import Message from "../message"
@@ -6,7 +7,6 @@ import Command from "../command"
 Message.add(async (message) => {
   if (message.author.bot) return
   const id = message.author.id
-  if (Math.ceil(Math.random() * 100) % 5) return
   if (!message.content.match(/(草|くさ|kusa)/iu)) return
   const grass = await database.getGrass(id)
   if (!grass?.enable) return
@@ -23,8 +23,7 @@ const mainCommand = "!grass"
 
 Command.add(async (args, message) => {
   const [main, sub] = args
-  if (main !== mainCommand) return
-  if (sub !== "help") return
+  if (main !== mainCommand || (sub !== undefined && sub !== "help")) return
   await message.channel.send(usage.grass._root)
 })
 
@@ -120,12 +119,14 @@ Command.add(async (args, message) => {
         await database.updateConfig(id, { dark: false })
         break
       default:
-        await message.channel.send(usage.grass.image)
+        await message.channel.send(usage.grass.dark)
         return
     }
     await message.reply(
       `ダークモードを${config === "on" ? "有効" : "無効"}にしました。`,
     )
+    await database.updateGrass(id)
+    console.log("OK")
   } catch {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
@@ -157,3 +158,5 @@ Command.add(async (args, message) => {
     await message.channel.send(usage.grass.setup)
   }
 })
+
+cron.schedule("0 0 * * * *", database.updateAllGrass)

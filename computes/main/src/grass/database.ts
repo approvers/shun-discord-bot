@@ -74,20 +74,22 @@ export async function getGrass(userId: string): Promise<GrassDoc | null> {
   return isGrassDoc(grass) ? grass : null
 }
 
-export async function getAllUsers(): Promise<GrassDoc[]> {
-  const docs = await grassCollection().get()
-  const users: GrassDoc[] = []
-  docs.forEach((doc) => {
-    const data = doc.data()
-    if (isGrassDoc(data)) users.push(data)
-  })
-  return users
-}
-
-export async function updateGrass(userId: string, grass: Grass): Promise<void> {
+export async function updateGrass(userId: string): Promise<void> {
   const user = await getGrass(userId)
   if (!user) throw new Error("user is not found")
+  const grass = await fetchGrass(user.name, user.dark)
+  if (!grass) return
   await grassCollection().doc(userId).update(grass)
+}
+
+export async function updateAllGrass(): Promise<void> {
+  const docs = await grassCollection().get()
+  const updatePromise: Promise<void>[] = []
+  docs.forEach((doc) => {
+    const id = doc.id
+    updatePromise.push(updateGrass(id))
+  })
+  await Promise.all(updatePromise)
 }
 
 export async function updateConfig(
