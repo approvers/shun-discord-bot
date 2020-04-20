@@ -74,6 +74,12 @@ export async function getGrass(userId: string): Promise<GrassDoc | null> {
   return isGrassDoc(grass) ? grass : null
 }
 
+export async function updateGrass(userId: string, grass: Grass): Promise<void> {
+  const user = await getGrass(userId)
+  if (!user) throw new Error("user is not found")
+  await grassCollection().doc(userId).update(grass)
+}
+
 export async function updateConfig(
   userId: string,
   config: Config,
