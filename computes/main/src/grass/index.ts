@@ -1,8 +1,8 @@
 import * as database from "./database"
-import * as Discord from "discord.js"
+import { Message } from "discord.js"
 import usage from "../usage"
 
-export const sayGrass = async (message: Discord.Message): Promise<void> => {
+export const sayGrass = async (message: Message): Promise<void> => {
   if (message.author.bot) return
   if (!message.member?.id) return
   if (Math.ceil(Math.random() * 100) % 5) return
@@ -20,10 +20,7 @@ export const sayGrass = async (message: Discord.Message): Promise<void> => {
   }
 }
 
-const setup = async (
-  commands: string[],
-  message: Discord.Message,
-): Promise<void> => {
+const setup = async (commands: string[], message: Message): Promise<void> => {
   const name = commands[2]
   const id = message.member?.id as string
   if (name === undefined) {
@@ -47,10 +44,7 @@ const setup = async (
   await message.reply("セットアップが完了しました。")
 }
 
-const enable = async (
-  commands: string[],
-  message: Discord.Message,
-): Promise<void> => {
+const enable = async (commands: string[], message: Message): Promise<void> => {
   const id = message.author.id
   try {
     await database.updateConfig(id, { enable: true })
@@ -61,10 +55,7 @@ const enable = async (
   }
 }
 
-const disable = async (
-  commands: string[],
-  message: Discord.Message,
-): Promise<void> => {
+const disable = async (commands: string[], message: Message): Promise<void> => {
   const id = message.author.id
   try {
     await database.updateConfig(id, { enable: false })
@@ -75,10 +66,7 @@ const disable = async (
   }
 }
 
-const image = async (
-  commands: string[],
-  message: Discord.Message,
-): Promise<void> => {
+const image = async (commands: string[], message: Message): Promise<void> => {
   const config = commands[2]
   const id = message.author.id
   try {
@@ -102,10 +90,7 @@ const image = async (
   }
 }
 
-const dark = async (
-  commands: string[],
-  message: Discord.Message,
-): Promise<void> => {
+const dark = async (commands: string[], message: Message): Promise<void> => {
   const config = commands[2]
   const id = message.author.id
   try {
@@ -129,10 +114,7 @@ const dark = async (
   }
 }
 
-const target = async (
-  commands: string[],
-  message: Discord.Message,
-): Promise<void> => {
+const target = async (commands: string[], message: Message): Promise<void> => {
   const config = commands[2]
   const id = message.author.id
   try {
@@ -159,7 +141,7 @@ const target = async (
 
 export const parseCommand = async (
   commands: string[],
-  message: Discord.Message,
+  message: Message,
 ): Promise<void> => {
   if (commands[0] !== "!grass") return
   switch (commands[1]) {
