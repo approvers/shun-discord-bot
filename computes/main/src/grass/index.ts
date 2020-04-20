@@ -3,6 +3,7 @@ import * as database from "./database"
 import usage from "../usage"
 import Message from "../message"
 import Command from "../command"
+import { MessageAttachment } from "discord.js"
 
 Message.add(async (message) => {
   if (message.author.bot) return
@@ -16,7 +17,11 @@ Message.add(async (message) => {
     .match(/.{1,2000}/g)
     ?.map((grassStr) => message.channel.send(grassStr))
   if (sendPromise) await Promise.all(sendPromise)
-  if (grass.display) await message.channel.send(grass.image)
+  if (grass.display) {
+    const imageBuffer = Buffer.from(grass.image, "base64")
+    const image = new MessageAttachment(imageBuffer)
+    await message.channel.send("", image)
+  }
 })
 
 const mainCommand = "!grass"
@@ -126,7 +131,7 @@ Command.add(async (args, message) => {
       `ダークモードを${config === "on" ? "有効" : "無効"}にしました。`,
     )
     await database.updateGrass(id)
-    console.log("OK")
+    await message.reply("画像のアップデートが完了しました。")
   } catch {
     await message.reply("セットアップが行われていません。")
     await message.channel.send(usage.grass.setup)
