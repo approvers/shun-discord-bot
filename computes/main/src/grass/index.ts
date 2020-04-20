@@ -6,7 +6,7 @@ import Command from "../command"
 Message.add(async (message) => {
   if (message.author.bot) return
   const id = message.author.id
-  // if (Math.ceil(Math.random() * 100) % 5) return
+  if (Math.ceil(Math.random() * 100) % 5) return
   if (!message.content.match(/(草|くさ|kusa)/iu)) return
   const grass = await database.getGrass(id)
   if (!grass?.enable) return
