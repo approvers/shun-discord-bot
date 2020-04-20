@@ -38,7 +38,7 @@ const setup = async (commands: string[], message: Message): Promise<void> => {
     name,
     enable: true,
     display: true,
-    dark: true,
+    dark: false,
     target: "year",
   })
   await message.reply("セットアップが完了しました。")
