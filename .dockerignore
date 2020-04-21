@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules/
+
+# Node.js build output
+dist/
+
+# functions directories
+functions/
