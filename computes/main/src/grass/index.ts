@@ -10,7 +10,7 @@ Message.add(async (message) => {
   const id = message.author.id
   if (!message.content.match(/(草|くさ|kusa)/iu)) return
   const grass = await database.getGrass(id)
-  if (!grass?.enable) return
+  if (!grass) return
   const count = grass[grass.target]
   const sendPromise = "w"
     .repeat(count)
@@ -31,12 +31,6 @@ Command.add("!grass", async (args, message) => {
   switch (name) {
     case "setup":
       await message.channel.send(usage.grass.setup)
-      return
-    case "enable":
-      await message.channel.send(usage.grass.enable)
-      return
-    case "disable":
-      await message.channel.send(usage.grass.disable)
       return
     case "image":
       await message.channel.send(usage.grass.image)
@@ -68,34 +62,11 @@ grassCommand.add("setup", async (args, message) => {
   await database.setGrass(id, {
     ...grass,
     name,
-    enable: true,
     display: true,
     dark: false,
     target: "year",
   })
   await message.reply("セットアップが完了しました。")
-})
-
-grassCommand.add("enable", async (args, message) => {
-  const id = message.author.id
-  const result = await database.updateConfig(id, { enable: true })
-  if (result) {
-    await message.reply("草Botを有効にしました。")
-    return
-  }
-  await message.reply("セットアップが行われていません。")
-  await message.channel.send(usage.grass.setup)
-})
-
-grassCommand.add("disable", async (args, message) => {
-  const id = message.author.id
-  const result = await database.updateConfig(id, { enable: false })
-  if (result) {
-    await message.reply("草Botを無効にしました。")
-    return
-  }
-  await message.reply("セットアップが行われていません。")
-  await message.channel.send(usage.grass.setup)
 })
 
 grassCommand.add("image", async (args, message) => {
