@@ -81,7 +81,7 @@ export const updateConfig = async (
 ): Promise<boolean> => {
   const user = await getGrass(userId)
   if (!user) return false
-  await grassCollection().doc().update(config)
+  await grassCollection().doc(userId).update(config)
   return true
 }
 
