@@ -2,7 +2,7 @@ import cron from "node-cron"
 import * as database from "./database"
 import usage from "../usage"
 import Message from "../message"
-import Command from "../command"
+import { Command } from "../command"
 import { MessageAttachment } from "discord.js"
 
 Message.add(async (message) => {
@@ -18,28 +18,46 @@ Message.add(async (message) => {
     ?.map((grassStr) => message.channel.send(grassStr))
   if (sendPromise) await Promise.all(sendPromise)
   if (grass.display) {
-    const imageBuffer = Buffer.from(grass.image, "base64")
-    const image = new MessageAttachment(imageBuffer)
+    const image = new MessageAttachment(grass.image)
     await message.channel.send("", image)
   }
 })
 
-const mainCommand = "!grass"
+const grassCommand = new Command()
 
-Command.add(async (args, message) => {
-  const [main, sub] = args
-  if (main !== mainCommand || (sub !== undefined && sub !== "help")) return
-  await message.channel.send(usage.grass._root)
+Command.add("!grass", async (args, message) => {
+  const [sub, name] = args
+  if (sub !== undefined && sub !== "help") return
+  switch (name) {
+    case "setup":
+      await message.channel.send(usage.grass.setup)
+      return
+    case "enable":
+      await message.channel.send(usage.grass.enable)
+      return
+    case "disable":
+      await message.channel.send(usage.grass.disable)
+      return
+    case "image":
+      await message.channel.send(usage.grass.image)
+      return
+    case "dark":
+      await message.channel.send(usage.grass.dark)
+      return
+    case "target":
+      await message.channel.send(usage.grass.target)
+      return
+    default:
+      await message.channel.send(usage.grass.ROOT)
+      return
+  }
 })
 
-Command.add(async (args, message) => {
-  const [main, sub, name] = args
+grassCommand.add("setup", async (args, message) => {
+  const name = args[0]
   const id = message.author.id
-  if (main !== mainCommand && sub !== "setup") return
-  if (sub !== "setup") return
   if (name == null) {
     await message.channel.send(usage.grass.setup)
-    return
   }
   await message.reply("セットアップを開始します(これには時間がかかります)。")
   const grass = await database.fetchGrass(name, false)
@@ -58,110 +76,105 @@ Command.add(async (args, message) => {
   await message.reply("セットアップが完了しました。")
 })
 
-Command.add(async (args, message) => {
-  const [main, sub] = args
-  if (main !== mainCommand || sub !== "enable") {
+grassCommand.add("enable", async (args, message) => {
+  const id = message.author.id
+  const result = await database.updateConfig(id, { enable: true })
+  if (result) {
+    await message.reply("草Botを有効にしました。")
     return
   }
-  const id = message.author.id
-  try {
-    await database.updateConfig(id, { enable: true })
-    await message.reply("草Botを有効にしました。")
-  } catch {
-    await message.reply("セットアップが行われていません。")
-    await message.channel.send(usage.grass.setup)
-  }
+  await message.reply("セットアップが行われていません。")
+  await message.channel.send(usage.grass.setup)
 })
 
-Command.add(async (args, message) => {
-  const [main, sub] = args
-  if (main !== mainCommand || sub !== "disable") return
+grassCommand.add("disable", async (args, message) => {
   const id = message.author.id
-  try {
-    await database.updateConfig(id, { enable: false })
+  const result = await database.updateConfig(id, { enable: false })
+  if (result) {
     await message.reply("草Botを無効にしました。")
-  } catch {
-    await message.reply("セットアップが行われていません。")
-    await message.channel.send(usage.grass.setup)
+    return
   }
+  await message.reply("セットアップが行われていません。")
+  await message.channel.send(usage.grass.setup)
 })
 
-Command.add(async (args, message) => {
-  const [main, sub, config] = args
-  if (main !== mainCommand || sub !== "image") return
+grassCommand.add("image", async (args, message) => {
+  const config = args[0]
   const id = message.author.id
-  try {
-    switch (config) {
-      case "on":
-        await database.updateConfig(id, { display: true })
-        break
-      case "off":
-        await database.updateConfig(id, { display: false })
-        break
-      default:
-        await message.channel.send(usage.grass.image)
-        return
-    }
-    await message.reply(
-      `画像表示を${config === "on" ? "有効" : "無効"}にしました。`,
-    )
-  } catch {
-    await message.reply("セットアップが行われていません。")
-    await message.channel.send(usage.grass.setup)
+  let result
+  switch (config) {
+    case "on":
+      result = await database.updateConfig(id, { display: true })
+      break
+    case "off":
+      result = await database.updateConfig(id, { display: false })
+      break
+    default:
+      await message.channel.send(usage.grass.image)
+      return
   }
+  if (result) {
+    const response = config === "on" ? "有効" : "無効"
+    await message.reply(`画像表示を${response}にしました。`)
+    return
+  }
+  await message.reply("セットアップが行われていません。")
+  await message.channel.send(usage.grass.setup)
 })
 
-Command.add(async (args, message) => {
-  const [main, sub, config] = args
-  if (main !== mainCommand || sub !== "dark") return
+grassCommand.add("dark", async (args, message) => {
+  const config = args[0]
   const id = message.author.id
-  try {
-    switch (config) {
-      case "on":
-        await database.updateConfig(id, { dark: true })
-        break
-      case "off":
-        await database.updateConfig(id, { dark: false })
-        break
-      default:
-        await message.channel.send(usage.grass.dark)
-        return
-    }
-    await message.reply(
-      `ダークモードを${config === "on" ? "有効" : "無効"}にしました。`,
-    )
+  let result
+  switch (config) {
+    case "on":
+      result = await database.updateConfig(id, { dark: true })
+      break
+    case "off":
+      result = await database.updateConfig(id, { dark: false })
+      break
+    default:
+      await message.channel.send(usage.grass.dark)
+      return
+  }
+  if (result) {
+    const response = config === "on" ? "有効" : "無効"
+    await message.reply(`ダークモードを${response}にしました。`)
+    await message.reply("画像のアップデートを開始します。")
     await database.updateGrass(id)
     await message.reply("画像のアップデートが完了しました。")
-  } catch {
-    await message.reply("セットアップが行われていません。")
-    await message.channel.send(usage.grass.setup)
+    return
   }
+  await message.reply("セットアップが行われていません。")
+  await message.channel.send(usage.grass.setup)
 })
 
-Command.add(async (args, message) => {
-  const [main, sub, config] = args
-  if (main !== mainCommand || sub !== "target") return
+grassCommand.add("target", async (args, message) => {
+  const config = args[0]
   const id = message.author.id
-  try {
-    switch (config) {
-      case "today":
-        await database.updateConfig(id, { target: "today" })
-        break
-      case "week":
-        await database.updateConfig(id, { target: "week" })
-        break
-      case "year":
-        await database.updateConfig(id, { target: "year" })
-        break
-      default:
-        await message.channel.send(usage.grass.target)
-        return
-    }
-    await message.reply(`期間を${config}に設定しました。`)
-  } catch {
-    await message.reply("セットアップが行われていません。")
-    await message.channel.send(usage.grass.setup)
+  let result
+  switch (config) {
+    case "today":
+      result = await database.updateConfig(id, { target: "today" })
+      break
+    case "week":
+      result = await database.updateConfig(id, { target: "week" })
+      break
+    case "year":
+      result = await database.updateConfig(id, { target: "year" })
+      break
+    default:
+      await message.channel.send(usage.grass.target)
+      return
   }
+  if (result) {
+    await message.reply(`期間を${config}に設定しました。`)
+    return
+  }
+  await message.reply("セットアップが行われていません。")
+  await message.channel.send(usage.grass.setup)
 })
+
+Command.add("!grass", grassCommand)
 
 cron.schedule("0 0 * * * *", database.updateAllGrass)
