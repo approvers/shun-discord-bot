@@ -6,7 +6,7 @@ grass:
     = Usage =
       !grass [subcommands] ...
     = Subcommands =
-      help                     :: ヘルプを表示します。
+      help [subcommands]       :: ヘルプを表示します。
       setup [user name]        :: 草Botのセットアップを行います。
       enable                   :: 草Botを有効にします。
       disable                  :: 草Botを無効にします。
