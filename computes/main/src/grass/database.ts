@@ -15,14 +15,12 @@ const isGrass = (item: any): item is Grass =>
   item?.image instanceof Buffer
 
 export interface Config {
-  enable: boolean
   dark: boolean
   display: boolean
   target: "today" | "week" | "year"
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isConfig = (item: any): item is Config =>
-  typeof item?.enable === "boolean" &&
   typeof item?.dark === "boolean" &&
   typeof item?.display === "boolean" &&
   ["today", "week", "year"].includes(item?.target)
@@ -60,7 +58,6 @@ export const setGrass = async (
     week: grass.week,
     year: grass.year,
     image: grass.image,
-    enable: grass.enable,
     dark: grass.dark,
     display: grass.display,
     target: grass.target,
