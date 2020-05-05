@@ -18,8 +18,7 @@ Message.add(async (message) => {
     ?.map((grassStr) => message.channel.send(grassStr))
   if (sendPromise) await Promise.all(sendPromise)
   if (grass.display) {
-    const imageBuffer = Buffer.from(grass.image, "base64")
-    const image = new MessageAttachment(imageBuffer)
+    const image = new MessageAttachment(grass.image)
     await message.channel.send("", image)
   }
 })
