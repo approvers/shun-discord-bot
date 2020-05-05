@@ -7,8 +7,6 @@ interface Document {
 
 interface Grass extends Document {
   readonly setup: string
-  readonly enable: string
-  readonly disable: string
   readonly image: string
   readonly dark: string
   readonly target: string
