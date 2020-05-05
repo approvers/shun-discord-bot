@@ -48,7 +48,7 @@ Command.add("!grass", async (args, message) => {
       await message.channel.send(usage.grass.target)
       return
     default:
-      await message.channel.send(usage.grass._root)
+      await message.channel.send(usage.grass.ROOT)
       return
   }
 })

@@ -1,5 +1,5 @@
 grass:
-  _root: |
+  ROOT: |
     ```asciidoc
     = Description =
       草/くさ/kusaに対して反応してGitHubの芝(草)を表示します。

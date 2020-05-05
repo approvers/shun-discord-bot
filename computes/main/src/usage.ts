@@ -2,7 +2,7 @@ import { safeLoad } from "js-yaml"
 import { readFileSync } from "fs"
 
 interface Document {
-  readonly _root: string
+  readonly ROOT: string
 }
 
 interface Grass extends Document {
