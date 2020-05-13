@@ -2,6 +2,7 @@ import * as Discord from "discord.js"
 import Message from "./message"
 import { Command } from "./command"
 import "./grass"
+import "./screenshot"
 
 const client = new Discord.Client()
 const token = process.env.DISCORD_TOKEN
