@@ -40,3 +40,12 @@ grass:
     = Usage =
       !grass target [today/week/year]
     ```
+
+screenshot:
+  ROOT: |
+    ```asciidoc
+    = Description =
+      URL先のスクリーンショットを取得します。
+    = Usage =
+      !screenshot [URL]
+    ```

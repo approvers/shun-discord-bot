@@ -1,0 +1,8 @@
+# own file
+.gcloudignore
+
+# Dependency directories
+node_modules/
+
+# typescript config file
+tsconfig.json

@@ -12,8 +12,11 @@ interface Grass extends Document {
   readonly target: string
 }
 
+type Screenshot = Document
+
 interface Usage {
   readonly grass: Grass
+  readonly screenshot: Screenshot
 }
 
 export default safeLoad(readFileSync("usage.yml", "utf-8")) as Usage
