@@ -3,6 +3,7 @@ import Message from "./message"
 import { Command } from "./command"
 import "./grass"
 import "./screenshot"
+import "./formatter"
 
 const client = new Discord.Client()
 const token = process.env.DISCORD_TOKEN
