@@ -8,7 +8,7 @@ import { MessageAttachment } from "discord.js"
 Message.add(async (message) => {
   if (message.author.bot) return
   const id = message.author.id
-  if (!message.content.match(/(草|くさ|kusa)/iu)) return
+  if (!message.content.match(/(草|くさ|kusa|区s|ｋさ|grass|kスア)/iu)) return
   const grass = await database.getGrass(id)
   if (!grass) return
   const count = grass[grass.target]
