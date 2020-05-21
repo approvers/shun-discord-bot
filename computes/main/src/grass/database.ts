@@ -42,11 +42,15 @@ export const fetchGrass = async (
 ): Promise<Grass | null> => {
   const url = process.env.GET_GRASS_URL
   if (!url) throw new Error("GET_GRASS_URL is undefined")
-  const { data } = await axios.post(url, { name, dark: isDark })
-  if (!data?.image) return null
-  const image = Buffer.from(data.image, "base64")
-  const grass = { ...data, image }
-  return isGrass(grass) ? grass : null
+  try {
+    const { data } = await axios.post(url, { name, dark: isDark })
+    if (!data?.image) return null
+    const image = Buffer.from(data.image, "base64")
+    const grass = { ...data, image }
+    return isGrass(grass) ? grass : null
+  } catch {
+    return null
+  }
 }
 
 export const setGrass = async (
